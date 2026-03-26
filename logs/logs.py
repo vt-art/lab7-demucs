@@ -5,10 +5,6 @@ import redis
 ##
 ## Configure test vs. production
 ##
-
-##
-## Configure test vs. production
-##
 redisHost = os.getenv("REDIS_HOST") or "localhost"
 redisPort = os.getenv("REDIS_PORT") or 6379
 
