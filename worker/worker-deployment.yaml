@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: worker
+          image: us-central1-docker.pkg.dev/lab7-491318/msaas/demucs-worker:v1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: MINIO_HOST
+              value: "minio:9000"
+            - name: MINIO_ROOT_USER
+              value: "rootuser"
+            - name: MINIO_ROOT_PASSWORD
+              value: "rootpass123"
+            - name: MINIO_SECURE
+              value: "false"
+            - name: INPUT_BUCKET
+              value: "queue"
+            - name: OUTPUT_BUCKET
+              value: "output"
+            - name: WORK_QUEUE_KEY
+              value: "toWorker"
+            - name: LOG_QUEUE
+              value: "logging"
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "1000m"
+            limits:
+              memory: "8Gi"
+              cpu: "2000m"
