@@ -42,7 +42,7 @@ for mp3 in glob.glob("data/*.mp3"):
         data={
             "mp3": base64.b64encode( open(mp3, "rb").read() ).decode('utf-8'),
             "callback": {
-                "url": "http://localhost:5000",
+                "url": "http://rest-service:5000",
                 "data": {"mp3": mp3, 
                          "data": "to be returned"}
             }
@@ -53,3 +53,4 @@ for mp3 in glob.glob("data/*.mp3"):
     mkReq(requests.get, "apiv1/queue", data=None)
 
 sys.exit(0)
+
