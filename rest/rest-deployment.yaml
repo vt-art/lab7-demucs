@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest
+  template:
+    metadata:
+      labels:
+        app: rest
+    spec:
+      containers:
+        - name: rest
+          image: demucs-rest: us-central1-docker.pkg.dev/lab7-491318/msaas/demucs-rest:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: MINIO_HOST
+              value: "minio:9000"
+            - name: MINIO_ROOT_USER
+              value: "rootuser"
+            - name: MINIO_ROOT_PASSWORD
+              value: "rootpass123"
+            - name: MINIO_SECURE
+              value: "false"
+            - name: INPUT_BUCKET
+              value: "queue"
+            - name: OUTPUT_BUCKET
+              value: "output"
